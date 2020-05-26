@@ -1,5 +1,7 @@
 import requests
 
+from utils.logUtil import my_log
+
 
 def requests_get(url, headers=None):
     """创建封装get方法"""
@@ -40,11 +42,17 @@ def requests_post(url, headers=None, data=None):
 class RequestsApi():
     '''重构request类'''
 
+    def __init__(self):
+        # 日志对象
+        self.log = my_log("Requests")
+
     def request_api(self, url, json=None, headers=None, method='get', cookies=None, data=None):
         '''公共方法'''
         if method == 'get':
+            self.log.debug("发送get请求")
             response = requests.get(url=url, json=json, headers=headers, cookies=cookies, data=data)
         elif method == 'post':
+            self.log.debug("发送post请求")
             response = requests.post(url=url, json=json, headers=headers, cookies=cookies, data=data)
 
         # 获取结果响应内容
